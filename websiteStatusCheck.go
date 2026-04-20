@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const monitoramentos = 5
+const monitoramentoDelay = 5
 
 func main() {
 	mostraIntroducao()
@@ -52,13 +56,21 @@ func leComando() int {
 func iniciarMonitoramento() {
 	fmt.Println("Iniciando monitoramento...")
 	sites := []string{"https://www.alura.com.br", "https://www.youtube.com", "https://www.github.com"}
-	for i := 0; i < len(sites); i++ {
-		requisicao, _ := http.Get(sites[i])
-		if requisicao.StatusCode == 200 {
-			fmt.Println("Site:", sites[i], "Foi carregado com sucesso!\nCódigo:", requisicao.StatusCode)
-		} else {
-			fmt.Println("Site:", sites[i], "Possuí problemas.\nCódigo:", requisicao.StatusCode)
+	for i := 0; i < monitoramentos; i++ {
+		for i, site := range sites {
+			testaSite(i, site)
 		}
+		time.Sleep(monitoramentoDelay * time.Second)
+		fmt.Println("\nTestando... Por favor não desligue seu computador")
 	}
+	fmt.Println("\nTeste completo! voltando para o menu inicial...")
+}
 
+func testaSite(index int, site string) {
+	requisicao, _ := http.Get(site)
+	if requisicao.StatusCode == 200 {
+		fmt.Println(index, "-", "Site:", site, "Foi carregado com sucesso!\nCódigo:", requisicao.StatusCode)
+	} else {
+		fmt.Println(index, "-", "Site:", site, "Possuí problemas.\nCódigo:", requisicao.StatusCode)
+	}
 }
