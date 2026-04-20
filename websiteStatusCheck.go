@@ -13,7 +13,6 @@ func main() {
 		comando := leComando()
 		executaComando(comando)
 	}
-
 }
 
 func mostraIntroducao() {
@@ -27,12 +26,6 @@ func mostraMenu() {
 	fmt.Println("\n1- Iniciar Monitoramento")
 	fmt.Println("2- Exibir logs")
 	fmt.Println("0- Sair")
-}
-
-func leComando() int {
-	var comando int
-	fmt.Scan(&comando)
-	return comando
 }
 
 func executaComando(valor int) {
@@ -50,15 +43,19 @@ func executaComando(valor int) {
 	}
 }
 
+func leComando() int {
+	var comando int
+	fmt.Scan(&comando)
+	return comando
+}
+
 func iniciarMonitoramento() {
 	fmt.Println("Iniciando monitoramento...")
 
-	site := "https://www.alura.com.br"
-	requisicao, _ := http.Get(site)
+	requisicao, _ := http.Get(a.sites[1])
 	if requisicao.StatusCode == 200 {
-		fmt.Println("Site:", site, "Foi carregado com sucesso!\nCódigo:", requisicao.StatusCode)
+		fmt.Println("Site:", a.sites[1], "Foi carregado com sucesso!\nCódigo:", requisicao.StatusCode)
 	} else {
-		fmt.Println("Site:", site, "Possuí problemas.\nCódigo:", requisicao.StatusCode)
+		fmt.Println("Site:", a.sites[1], "Possuí problemas.\nCódigo:", requisicao.StatusCode)
 	}
-
 }
