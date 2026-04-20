@@ -51,11 +51,14 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Iniciando monitoramento...")
-
-	requisicao, _ := http.Get(a.sites[1])
-	if requisicao.StatusCode == 200 {
-		fmt.Println("Site:", a.sites[1], "Foi carregado com sucesso!\nCódigo:", requisicao.StatusCode)
-	} else {
-		fmt.Println("Site:", a.sites[1], "Possuí problemas.\nCódigo:", requisicao.StatusCode)
+	sites := []string{"https://www.alura.com.br", "https://www.youtube.com", "https://www.github.com"}
+	for i := 0; i < len(sites); i++ {
+		requisicao, _ := http.Get(sites[i])
+		if requisicao.StatusCode == 200 {
+			fmt.Println("Site:", sites[i], "Foi carregado com sucesso!\nCódigo:", requisicao.StatusCode)
+		} else {
+			fmt.Println("Site:", sites[i], "Possuí problemas.\nCódigo:", requisicao.StatusCode)
+		}
 	}
+
 }
